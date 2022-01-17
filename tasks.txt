@@ -1,0 +1,16 @@
+You need to create an address book :
+It should contain the following pages 
+Login page
+Registration page 
+Listing page 
+Functionality wise 
+Login
+Logout
+Registration
+Download as pdf and excel
+Print functionality
+Listing using ColdFusion ORM
+Edit / Add and update contact using same modal window 
+
+Please note that applications should have both front end and back end validation. Security features like cross site scripting ,sql injection and verbose error should be prevented 
+Please use the above added screens for reference
