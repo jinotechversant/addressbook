@@ -7,4 +7,5 @@ component{
 	this.ormEnabled = true;
     this.ormSettings = { logsql : true };
     this.invokeImplicitAccessor = true;
+    this.mappings["/local"] = getDirectoryFromPath(getCurrentTemplatePath());
 }

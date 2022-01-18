@@ -1,8 +1,7 @@
 <cfscript>
-
-if(StructKeyExists(Session, "isUserLoggedIn"))
+if(StructKeyExists(Session, "user"))
 	{
-		writeDump(Session);
+		location("dashboard.cfm");
 		exit;
 	}
 else

@@ -77,3 +77,40 @@ function formSubmit()
 	            return true;
           }
   }
+
+function loginSubmit()
+	{
+	    let text_username       		= document.forms['login-form']['text-username'].value;
+	    let username_error      		= document.getElementById('username-error');
+	    let text_password       		= document.forms['login-form']['text-password'].value;
+	    let password_error      		= document.getElementById('password-error');
+
+	    if(text_username == "" || text_password == "")
+	      {
+	        if(text_username == null || text_username == "")
+	          {
+	            username_error.textContent = "Please enter your user name"
+	          }
+	        else 
+	          {
+	            username_error.textContent = ""
+	          }
+
+	        if(text_password == null || text_password == "")
+	          {
+	            password_error.textContent = "Please enter your password"
+	          }
+	        else 
+	          {
+	            password_error.textContent = ""
+	          }
+
+	        return false;
+	      }
+      else 
+          {
+				username_error.textContent = ""
+				password_error.textContent = ""   
+	            return true;
+          }
+  }
