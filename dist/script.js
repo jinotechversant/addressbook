@@ -69,11 +69,11 @@ function formSubmit()
 	      }
       else 
           {
-				name_error.textContent = "" 
-				email_error.textContent = ""
-				username_error.textContent = ""
-				password_error.textContent = ""
-				confirm_password_error.textContent = ""    
+							name_error.textContent = "" 
+							email_error.textContent = ""
+							username_error.textContent = ""
+							password_error.textContent = ""
+							confirm_password_error.textContent = ""    
 	            return true;
           }
   }
@@ -151,7 +151,7 @@ function contactSubmit(event)
 	    let form_action			= document.forms['contact-form']['form_action'].value;
 	    let contact_id			= document.forms['contact-form']['contact_id'].value;
 
-	    if(title == "" || first_name == "" || last_name == "" || gender == "" || dob == "" || address == "" || pincode == "" || email == "" || phone == "" || upload_photo == "")
+	    if(title == "" || first_name == "" || last_name == "" || gender == "" || dob == "" || address == "" || pincode == "" || email == "" || phone == "")
 		      {
 		        if(title == null || title == "")
 		          {
@@ -233,7 +233,8 @@ function contactSubmit(event)
 		          {
 		            phone_error.textContent = ""
 		          }   
-  
+  					
+  					/*
 		        if(upload_photo == upload_photo || phone == "")
 		          {
 		            upload_error.textContent = "Please upload file"
@@ -242,7 +243,7 @@ function contactSubmit(event)
 		          {
 		            upload_error.textContent = ""
 		          }  
-
+		        */
 
 		        return false;
 		      }
@@ -263,7 +264,9 @@ function contactSubmit(event)
 							phone_error.textContent 	= ""   
 							upload_error.textContent 	= ""   
 
-	            let photo = document.getElementById("upload_photo").files[0];
+	            let photo = document.getElementById("photo_name").value;
+
+	            console.log('PHOTOS', photo);
 							
 							formData 	=	{
 														'title':title,  
@@ -305,17 +308,64 @@ function contactSubmit(event)
 			                  }
 			                else
 			                  {
+			                  	btnSubmit.removeAttribute('disabled');
 			                    form_error.textContent = obj.MESSAGE;
 			                    form_error.scrollIntoView();
 			                  }
 			              })
 			              .catch((error) => {
+			              	btnSubmit.removeAttribute('disabled');
 			                form_error.textContent = error;
 			                form_error.scrollIntoView();
 			              });
 
 	            return false;
           }
-  }  
+  }
+
+
+  function deleteSubmit(event)
+		{
+
+			let del_error			= document.getElementById('del_error');
+    	let del_success		= document.getElementById('del_success');
+    	let contact_id		= document.forms['delete-form']['del_contact_id'].value
+
+			console.log(contact_id)
+
+			formData	=	{
+						'form_action' : 'delete',
+						'contact_id'	:	contact_id
+				}
+
+			fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+              })
+              .then(response => response.json())
+              .then(data => {
+
+              	const obj = data;
+              	console.log('RESPONSE', obj);
+                if(obj.STATUS === 'ok')
+                  {
+                    location.reload();
+                  }
+                else
+                  {
+                    del_error.textContent = obj.MESSAGE;
+                    del_error.scrollIntoView();
+                  }
+              })
+              .catch((error) => {
+              	del_error.textContent = error
+                console.log(error)
+              });
+
+				return false;
+		}  
 
 

@@ -59,13 +59,13 @@
 			<div class="col-12 mt-5 bg-gainsboro">
 				<ul class="nav justify-content-end p-1">
 				  <li class="nav-item">
-				    <a class="nav-link" href="#"><img src="icons/pdf.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="pdf.cfm"><img src="icons/pdf.png" width="30"></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#"><img src="icons/excel.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="excel.cfm"><img src="icons/excel.png" width="30"></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#"><img src="icons/printer.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="download.cfm?type=print"><img src="icons/printer.png" width="30"></a>
 				  </li>
 				</ul>
 			</div>
@@ -93,13 +93,19 @@
 					  <tbody>
 					  		<cfloop array="#allcontact#" index="alc">
 							  	<tr>
-							      <th scope="row"><cfoutput>#alc.id#</cfoutput></th>
+							      <th scope="row">
+							      	<cfif len(trim(alc.PhotoName)) NEQ 0>
+								      	<img src="uploads/<cfoutput>#alc.PhotoName#</cfoutput>" id="view_profile" class="rounded" alt="Profile Picture" style="width: 80px;" />
+								      <cfelse>
+								      	<img src="images/no-image.png" id="view_profile" class="rounded" alt="Profile Picture" style="width: 80px;" />
+								      </cfif>
+							     	</th>
 							      <td><cfoutput>#alc.Title# #alc.FirstName# #alc.LastName#</cfoutput></td>
 							      <td><cfoutput>#alc.Email#</cfoutput></td>
 							      <td><cfoutput>#alc.Phone#</cfoutput></td>
 							      <td>
 							      	<button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contactModal" data-bs-value="edit-contact" data-bs-id="<cfoutput>#alc.id#</cfoutput>">Edit</button>
-							      	<button type="button" class="btn btn-sm btn-outline-danger" data-bs-id="<cfoutput>#alc.id#</cfoutput>">Delete</button>
+							      	<button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"  data-bs-id="<cfoutput>#alc.id#</cfoutput>">Delete</button>
 							      	<button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#contactModal" data-bs-value="view-contact" data-bs-id="<cfoutput>#alc.id#</cfoutput>">View</button>
 							    	</td>
 							    </tr>
@@ -110,6 +116,35 @@
 		</div>
 	</div>
 
+		<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="contactModal" aria-hidden="true">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form method="post" name="delete-form"	id="delete-form" onsubmit="return deleteSubmit(event)">
+							<div class="row">
+								<div class="col-12 mb-3">
+				       		<div id="del_error" class="form-text text-danger"></div>
+				       		<div id="del_success" class="form-text text-success"></div>
+				       	</div>						
+								<div class="col-12 mt-3 mb-5">
+									Are you sure you want to delete this contact ?
+								</div>
+								<div class="col-4">
+									<input type="hidden" name="del_contact_id"  id="del_contact_id" />
+								</div>
+								<div class="col-4">
+									<input type="submit" class="btn btn-md btn-outline-primary" name="submit" value="Yes">
+								</div>
+								<div class="col-4">
+									<input type="button" class="btn btn-md btn-outline-danger" data-bs-dismiss="modal" value="No">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModal" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
@@ -117,7 +152,7 @@
 		        <h5 class="modal-title" id="exampleModalLabel">Contact</h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
-		      <div class="modal-body">
+		      <div class="modal-body" id="form-panel">
 		      		<div class="loader" id="loader"></div>
 		      	  <form method="post" enctype="multipart/form-data" name="contact-form"	id="contact-form" onsubmit="return contactSubmit(event)">
 		      	  	<div class="row">
@@ -173,8 +208,9 @@
 			          <div class="row">
 			          	<div class="col-12 mb-3">
 				            <label for="upload_photo" class="col-form-label">Upload Photo*</label>
-				            <input type="file" class="form-control" id="upload_photo" name="upload_photo">
+				            <input type="file" class="form-control" id="upload_photo" name="upload_photo" onchange="uploadFile()">
 				            <div id="upload_error" class="form-text text-danger"></div>
+				            <input type="hidden" name="photo_name" id="photo_name" />
 				          </div>
 			          </div>
 			          <div class="row">
@@ -215,6 +251,41 @@
 					      </div>
 			        </form>
 		      </div>
+		      <div class="modal-body" id="view-panel">
+		      	<div class="row">
+	      	  	<div class="col-8">
+		       				<div class="row">
+									  <div class="col-sm-3">Name</div>
+									  <div class="col-sm-9"><span id="view_name"></span></div>
+									
+									  <div class="col-sm-3">Gender</div>
+									  <div class="col-sm-9"><span id="view_gender"></span></div>
+									
+									  <div class="col-sm-3">Date of Birth</div>
+									  <div class="col-sm-9"><span id="view_dob"></span></div>
+									
+									  <div class="col-sm-3">Address</div>
+									  <div class="col-sm-9"><span id="view_address"></span></div>
+									
+									  <div class="col-sm-3">Pincode</div>
+									  <div class="col-sm-9"><span id="view_pincode"></span></div>
+									
+									  <div class="col-sm-3">Email</div>
+									  <div class="col-sm-9"><span id="view_email"></span></div>
+									
+									  <div class="col-sm-3">Phone</div>
+									  <div class="col-sm-9"><span id="view_phone"></span></div>
+									</div>
+			       	</div>
+			       	<div class="col-4">
+			       		<div class="row">
+	      	  			<div class="col-12">
+	      	  				<img src="images/no-image.png" id="pop_image" class="rounded" alt="Profile Picture" style="width: 110px;" />
+	      	  			</div>
+	      	  		</div>
+			       	</div>
+			      </div>
+		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 		      </div>
@@ -230,7 +301,13 @@
 				var recipient = button.getAttribute('data-bs-value')				
 				var modalTitle = processModal.querySelector('.modal-title')
 				var actionText = document.getElementById("form_action")
+				
 				var x = document.getElementById("loader");
+				var a = document.getElementById("form-panel");
+				var b = document.getElementById("view-panel");
+
+				a.style.display = 'none';
+				b.style.display = 'none';
 
 				document.getElementById("contact-form").reset();	
 				let title						= document.getElementById('title');
@@ -253,6 +330,8 @@
 		    let phone_error     = document.getElementById('phone_error');
 		    let upload_photo		= document.getElementById('upload_photo');
 		    let upload_error    = document.getElementById('upload_error');
+		    let txt_contact_id	= document.getElementById('contact_id');
+		    let photo_name			= document.getElementById('photo_name');
 				let form_error			= document.getElementById('form_error');
 	      let form_success		= document.getElementById('form_success');
 
@@ -272,12 +351,16 @@
 				
 				if(recipient == 'add-contact')
 					{
+						a.style.display = 'block';
+						b.style.display = 'none';
 						x.style.display				 = 'none';
 						modalTitle.textContent = 'Create Contact'
 						actionText.value 			 = 'add'
 					}
 				else if(recipient == 'edit-contact')
 					{
+						a.style.display = 'block';
+						b.style.display = 'none';
 						x.style.display				 = 'block';
 						modalTitle.textContent = 'Edit Contact'
 						actionText.value 			 = 'edit'
@@ -300,31 +383,103 @@
 			              .then(data => {
 
 			              	const obj = data;
-
+			              	console.log('RESPONSE', obj);
 			                if(obj.STATUS === 'ok')
 			                  {
-			                    btnSubmit.removeAttribute('disabled');
-			                    console.log('Success:', obj);
-			                    form_success.textContent = obj.MESSAGE;
-			                    document.getElementById("contact-form").reset();
-			                    form_success.scrollIntoView();
+			                    var myval 								= obj.MESSAGE['0'];
+			                    title.value 							= myval.Title;
+											    first_name.value 					= myval.FirstName;
+											    last_name.value 					= myval.LastName;
+											    gender.value 							= myval.Gender;
+											    dob.value 								= new Date(myval.DateBirth).toISOString().substring(0,10);
+											    address.value 						= myval.Address;
+											    pincode.value 						= myval.Pincode;
+											    email.value 							= myval.Email;
+											    phone.value 							= myval.Phone;
+											    upload_photo.value 				= myval.Title;
+											    txt_contact_id.value			= contact_id;
+
+											    //if(myval.PhotoName)
+											    //{
+											    	photo_name.value = myval.PhotoName;
+											    //}
+
+											    x.style.display				 		= 'none';
 			                  }
 			                else
 			                  {
 			                    form_error.textContent = obj.MESSAGE;
 			                    form_error.scrollIntoView();
+			                    x.style.display				 		= 'none';
 			                  }
 			              })
 			              .catch((error) => {
-			                form_error.textContent = error;
-			                form_error.scrollIntoView();
+			                console.log(error)
+			                x.style.display				 		= 'none';
 			              });
 
 					}
 				else if(recipient == 'view-contact')
 					{
-						modalTitle.textContent = 'View Contact'
+						a.style.display = 'none';
+						b.style.display = 'block';
+						modalTitle.textContent = 'Contact Details'
 						actionText.value 			 = 'view'
+
+						document.getElementById("contact-form").reset();	
+						let view_name				= document.getElementById('view_name');
+				    let view_gender			= document.getElementById('view_gender');
+				    let view_dob				= document.getElementById('view_dob');
+				    let view_address		= document.getElementById('view_address');
+				    let view_pincode		= document.getElementById('view_pincode');
+				    let view_email			= document.getElementById('view_email');
+				    let view_phone			= document.getElementById('view_phone');
+				    let pop_image				= document.getElementById('pop_image');
+
+				    var contact_id = button.getAttribute('data-bs-id');
+
+				    formData	=	{
+								'form_action' : 'view',
+								'contact_id'	:	contact_id
+						}
+
+						fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+			                method: 'POST',
+			                headers: {
+			                  'Content-Type': 'application/json',
+			                },
+			                body: JSON.stringify(formData),
+			              })
+			              .then(response => response.json())
+			              .then(data => {
+
+			              	const obj = data;
+			              	console.log('RESPONSE', obj);
+			                if(obj.STATUS === 'ok')
+			                  {
+			                    var myval 								= obj.MESSAGE['0'];
+			                    view_name.textContent			= myval.Title+'. '+myval.FirstName+' '+myval.LastName;
+											    view_gender.textContent		= myval.Gender;
+											    view_dob.textContent			= new Date(myval.DateBirth).toISOString().substring(0,10);
+											    view_address.textContent	= myval.Address;
+											    view_pincode.textContent	= myval.Pincode;
+											    view_email.textContent		= myval.Email;
+											    view_phone.textContent		= myval.Phone;
+													pop_image.src 					= 'uploads/'+myval.PhotoName;
+
+											    x.style.display				 		= 'none';
+			                  }
+			                else
+			                  {
+			                    form_error.textContent = obj.MESSAGE;
+			                    form_error.scrollIntoView();
+			                    x.style.display				 		= 'none';
+			                  }
+			              })
+			              .catch((error) => {
+			                console.log(error)
+			                x.style.display				 		= 'none';
+			              });
 					}	
 				else
 					{
@@ -333,9 +488,55 @@
 					}
 			})
 
+			deleteModal.addEventListener('show.bs.modal', function (event) {
+					var button 						= 	event.relatedTarget;
+					var contact_id 				= 	button.getAttribute('data-bs-id');
+					var txt_contact_id 		= 	document.getElementById('del_contact_id');
+					txt_contact_id.value 	= 	contact_id;					
+			})
+
 			processModal.addEventListener('hidden.bs.modal', function (event) {
 			  	location.reload();
 			})
+
+			deleteModal.addEventListener('hidden.bs.modal', function (event) {
+			  	location.reload();
+			})
+
+
+			async function uploadFile() {
+
+					var x = document.getElementById("loader");
+					var photo_name = document.getElementById("photo_name");
+
+					x.style.display = 'block';
+			    let formData = new FormData();           
+			    formData.append("file", upload_photo.files[0]);
+			    await fetch('http://127.0.0.1:8500/addressbookapp/submit/upload.cfm', {
+			      method: "POST", 
+			      body: formData
+			    })
+			    .then(response => response.json())
+			    .then(data => {
+							const obj = data;
+							console.log('RESPONSE', obj);
+							if(obj.STATUS === 'ok')
+								{
+									photo_name.value	=	obj.MESSAGE;			
+									x.style.display		= 'none';
+								}
+							else
+								{
+									form_error.textContent = obj.MESSAGE;
+									form_error.scrollIntoView();
+									x.style.display				 		= 'none';
+								}
+							})
+							.catch((error) => {
+								x.style.display				 		= 'none';
+							});
+
+			}
 
     </script>
   </body>
