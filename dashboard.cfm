@@ -65,7 +65,7 @@
 				    <a class="nav-link" target="_blank" href="excel.cfm"><img src="icons/excel.png" width="30"></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" target="_blank" href="download.cfm?type=print"><img src="icons/printer.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="print.cfm"><img src="icons/printer.png" width="30"></a>
 				  </li>
 				</ul>
 			</div>
