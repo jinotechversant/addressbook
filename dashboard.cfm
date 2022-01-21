@@ -79,7 +79,7 @@
 				<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal" data-bs-value="add-contact">Create Contact</button>
 			</div>
 			<div class="col-md-10 bg-gainsboro">
-					<cfset allcontact = entityLoad( "contacts")>
+					<cfset allcontact = entityLoad( "contacts",{userid: Session.user.userid})>
 	  			<table class="table mt-3">
 					  <thead>
 					    <tr>
@@ -90,7 +90,7 @@
 					      <th scope="col"></th>
 					    </tr>
 					  </thead>
-					  <tbody>
+					  <tbody>					  	
 					  		<cfloop array="#allcontact#" index="alc">
 							  	<tr>
 							      <th scope="row">
@@ -210,7 +210,7 @@
 				            <label for="upload_photo" class="col-form-label">Upload Photo*</label>
 				            <input type="file" class="form-control" id="upload_photo" name="upload_photo" onchange="uploadFile()">
 				            <div id="upload_error" class="form-text text-danger"></div>
-				            <input type="hidden" name="photo_name" id="photo_name" />
+				            <input type="hidden" class="form-control" name="photo_name" id="photo_name" />
 				          </div>
 			          </div>
 			          <div class="row">
@@ -241,7 +241,7 @@
 				            <input type="text" class="form-control" id="phone" name="phone">
 				            <div id="phone_error" class="form-text text-danger"></div>
 				            <input type="hidden" name="form_action" id="form_action" value="">
-				            <input type="hidden" name="contact_id" id="contact_id" value="">
+				            <input type="hidden" name="contact_id" class="form-control" id="edit_contact_id" >
 				          </div>
 					      </div>
 					      <div class="row">
@@ -330,7 +330,7 @@
 		    let phone_error     = document.getElementById('phone_error');
 		    let upload_photo		= document.getElementById('upload_photo');
 		    let upload_error    = document.getElementById('upload_error');
-		    let txt_contact_id	= document.getElementById('contact_id');
+		    let txt_contact_id	= document.getElementById('edit_contact_id');
 		    let photo_name			= document.getElementById('photo_name');
 				let form_error			= document.getElementById('form_error');
 	      let form_success		= document.getElementById('form_success');
@@ -386,7 +386,8 @@
 			              	console.log('RESPONSE', obj);
 			                if(obj.STATUS === 'ok')
 			                  {
-			                    var myval 								= obj.MESSAGE['0'];
+			                    var myval 								= obj.MESSAGE['0'];			                    
+											    txt_contact_id.value			= contact_id;
 			                    title.value 							= myval.Title;
 											    first_name.value 					= myval.FirstName;
 											    last_name.value 					= myval.LastName;
@@ -395,14 +396,8 @@
 											    address.value 						= myval.Address;
 											    pincode.value 						= myval.Pincode;
 											    email.value 							= myval.Email;
-											    phone.value 							= myval.Phone;
-											    upload_photo.value 				= myval.Title;
-											    txt_contact_id.value			= contact_id;
-
-											    //if(myval.PhotoName)
-											    //{
-											    	photo_name.value = myval.PhotoName;
-											    //}
+											    phone.value 							= myval.Phone;											    
+													photo_name.value 					= myval.PhotoName;
 
 											    x.style.display				 		= 'none';
 			                  }

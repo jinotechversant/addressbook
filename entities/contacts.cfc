@@ -11,5 +11,6 @@ component entityname="contacts" persistent="true" table="contacts" {
     property name="Pincode" column="pincode" ormtype="text";
     property name="Email" column="email" ormtype="text";
     property name="Phone" column="phone" ormtype="text";
+    property name="Userid" column="userid" ormtype="text";
 
 }

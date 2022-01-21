@@ -53,6 +53,7 @@ if(StructKeyExists(Session,"user"))
 								contactObj.setEmail(email);
 								contactObj.setPhone(phone);
 								contactObj.setPhotoName(upload_photo);
+								contactObj.setUserid(Session.user.userid);
 								EntitySave(contactObj);
 								ormflush();
 								data.status 	= 	'ok';
