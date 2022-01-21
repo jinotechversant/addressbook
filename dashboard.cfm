@@ -372,7 +372,7 @@
 								'contact_id'	:	contact_id
 						}
 
-						fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+						fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
 			                method: 'POST',
 			                headers: {
 			                  'Content-Type': 'application/json',
@@ -438,7 +438,7 @@
 								'contact_id'	:	contact_id
 						}
 
-						fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+						fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
 			                method: 'POST',
 			                headers: {
 			                  'Content-Type': 'application/json',
@@ -507,7 +507,7 @@
 					x.style.display = 'block';
 			    let formData = new FormData();           
 			    formData.append("file", upload_photo.files[0]);
-			    await fetch('http://127.0.0.1:8500/addressbookapp/submit/upload.cfm', {
+			    await fetch('http://localhost:8500/addressbookapp/submit/upload.cfm', {
 			      method: "POST", 
 			      body: formData
 			    })

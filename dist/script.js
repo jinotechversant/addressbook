@@ -286,7 +286,7 @@ function contactSubmit(event)
 							var btnSubmit = document.getElementById('form_submit');
 							btnSubmit.disabled = true;	
 
-							fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+							fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
 			                method: 'POST',
 			                headers: {
 			                  'Content-Type': 'application/json',
@@ -338,7 +338,7 @@ function contactSubmit(event)
 						'contact_id'	:	contact_id
 				}
 
-			fetch('http://127.0.0.1:8500/addressbookapp/submit/contact.cfm', {
+			fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
