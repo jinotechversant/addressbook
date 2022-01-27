@@ -80,20 +80,21 @@
 				  </div>
 				  <div class="mb-3 form-check">
 				  	<div class="row">
-				  		<div class="col-4">
+				  		<div class="col-3">
 				  			<button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 				  		</div>
-				  		<div class="col-1">
+				  		<div class="col-3">
+				  			<a href="http://localhost:8500/addressbookapp/google.cfm" class="btn btn-primary">Signup With Google</a>
 				  		</div>
 				  		<div class="col-3">
 				  			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 				  		</div>
-				  		<div class="col-1">
-				  		</div>
 				  		<div class="col-3">
-				  			<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-								</fb:login-button>
-								<div id="status"></div>
+				  			<div class="ms-3">
+					  			<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+									</fb:login-button>
+									<div id="status"></div>
+								</div>
 				  		</div>
 				  	</div>				  	
 				  </div>
