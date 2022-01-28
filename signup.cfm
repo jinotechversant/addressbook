@@ -81,7 +81,7 @@
 				  <div class="mb-3 form-check">
 				  	<div class="row">
 				  		<div class="col-3">
-				  			<button type="submit" name="login-submit" class="btn btn-primary">Login</button>
+				  			<button type="submit" name="register-submit" class="btn btn-primary">Sign Up</button>
 				  		</div>
 				  		<div class="col-3">
 				  			<a href="http://localhost:8500/addressbookapp/google.cfm" class="btn btn-primary">Signup With Google</a>

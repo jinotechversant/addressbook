@@ -12,7 +12,7 @@ if(StructKeyExists(form,"login-submit"))
 				validate_user = x.checkUser(form);
 				if(validate_user.status == 'success')
 					{
-						if(validate_user.text.RecordCount)
+						if(validate_user.text.RecordCount == 1)
 							{
 								Session.user 				= structNew();
 								Session.user["loggedin"] 	= "yes";

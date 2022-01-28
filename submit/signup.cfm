@@ -11,14 +11,29 @@ if(StructKeyExists(form,"register-submit"))
 			{
 				if(form.text_password EQ form.text_confirm_password)
 					{
-						insert_user = x.insertUser(form);
-						if(insert_user.status == 'success')
+						validate_user = x.checkUser(form);
+						if(validate_user.status == 'success')
 							{
-								location("../signup.cfm?status=success&message=#insert_user.text#");
+								if(validate_user.text.RecordCount == 0)
+									{
+										insert_user = x.insertUser(form);
+										if(insert_user.status == 'success')
+											{
+												location("../signup.cfm?status=success&message=#insert_user.text#");
+											}
+										else
+											{
+												location("../signup.cfm?error=technical&message=#insert_user.text#");
+											}
+									}
+								else 
+									{
+										location("../signup.cfm?error=technical&message=Usename already registered");
+									}
 							}
 						else
 							{
-								location("../signup.cfm?error=technical&message=#insert_user.text#");
+								location("../signup.cfm?error=technical&message=Usename seems invalid");
 							}
 					}
 				else 
