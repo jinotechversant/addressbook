@@ -6,6 +6,8 @@ if(StructKeyExists(Session,"user"))
 				mydata 	= 	deserializeJSON(ToString(getHTTPRequestData().content));
 				data 	=	structNew();				
 
+				x = createObject("component", "local.components.contact")
+
 				if(mydata.form_action == 'add' || mydata.form_action == 'edit')
 					{
 						address 			=	mydata.address;
@@ -21,13 +23,16 @@ if(StructKeyExists(Session,"user"))
 
 						if(StructKeyExists(mydata,"upload_photo"))
 							{
-								upload_photo		=	mydata.upload_photo;	
+								mydata.photo_name		=	mydata.upload_photo;	
+								upload_photo			=	mydata.upload_photo;	
 							}
 						else 
 							{
-								upload_photo		=	"";
+								mydata.photo_name		=	"";
+								upload_photo			=	"";
 							}
 						
+						mydata.userid =  Session.user.userid;
 
 						if(len(trim(address)) == 0 || len(trim(dob)) == 0 || len(trim(email)) == 0 || len(trim(first_name)) == 0 || len(trim(gender)) == 0 || len(trim(last_name)) == 0 || len(trim(phone)) == 0 || len(trim(pincode)) == 0 || len(trim(title)) == 0 || len(trim(upload_photo)) == 0)
 							{
@@ -41,32 +46,29 @@ if(StructKeyExists(Session,"user"))
 				if(mydata.form_action == 'add')
 					{
 						try {
-								ORMReload()
-								contactObj 	=	EntityNew("contacts");
-								contactObj.setTitle(title);
-								contactObj.setFirstName(first_name);
-								contactObj.setLastName(last_name);
-								contactObj.setGender(gender);
-								contactObj.setAddress(address);
-								contactObj.setPincode(pincode);
-								contactObj.setDateBirth(dob);
-								contactObj.setEmail(email);
-								contactObj.setPhone(phone);
-								contactObj.setPhotoName(upload_photo);
-								contactObj.setUserid(Session.user.userid);
-								EntitySave(contactObj);
-								ormflush();
-								data.status 	= 	'ok';
-								data.message	=	'Contact added successfully';
-								writeOutput(serializeJSON(data));
-								exit;
+
+								insert_contact = x.insertContact(mydata);
+								if(insert_contact.status == 'success')
+									{
+										data.status 	= 	'ok';
+										data.message	=	'Contact added successfully';
+										writeOutput(serializeJSON(data));
+										exit;
+									}
+								else 
+									{
+										data.status 	= 	'error';
+										data.message	=	insert_contact.text;
+										writeOutput(serializeJSON(data));
+										exit;
+									}
 						}
 						catch(Exception e) { 
 							data.status 	= 	'error';
 							data.message	=	e.message;
 							writeOutput(serializeJSON(data));
 							exit;
-						} 
+						}
 					}
 				else if(mydata.form_action == 'edit')
 					{
@@ -79,24 +81,23 @@ if(StructKeyExists(Session,"user"))
 								writeOutput(serializeJSON(data));
 								exit;
 							}
-						try {
-								ORMReload()
-								contactObj 	=	entityLoad( "contacts", contact_id, true );
-								contactObj.setTitle(title);
-								contactObj.setFirstName(first_name);
-								contactObj.setLastName(last_name);
-								contactObj.setGender(gender);
-								contactObj.setAddress(address);
-								contactObj.setPincode(pincode);
-								contactObj.setDateBirth(dob);								
-								contactObj.setPhotoName(upload_photo);
-								contactObj.setEmail(email);
-								contactObj.setPhone(phone);
-								ormflush();
-								data.status 	= 	'ok';
-								data.message	=	'Contact updated successfully';
-								writeOutput(serializeJSON(data));
-								exit;
+						try 
+						{
+								update_contact = x.updateContact(mydata);
+								if(update_contact.status == 'success')
+									{
+										data.status 	= 	'ok';
+										data.message	=	'Contact updated successfully';
+										writeOutput(serializeJSON(data));
+										exit;
+									}
+								else 
+									{
+										data.status 	= 	'error';
+										data.message	=	update_contact.text;
+										writeOutput(serializeJSON(data));
+										exit;
+									}
 						}
 						catch(Exception e) { 
 							data.status 	= 	'error';
@@ -117,14 +118,21 @@ if(StructKeyExists(Session,"user"))
 								exit;
 							}
 						try {
-								ORMReload()
-								contactObj 	=	entityLoad( "contacts", contact_id, true );
-								entityDelete( contactObj );
-								ormflush();
-								data.status 	= 	'ok';
-								data.message	=	'Contact deleted successfully';
-								writeOutput(serializeJSON(data));
-								exit;
+								delete_contact = x.deleteContact(contact_id);
+								if(delete_contact.status == 'success')
+									{
+										data.status 	= 	'ok';
+										data.message	=	'Contact updated successfully';
+										writeOutput(serializeJSON(data));
+										exit;
+									}
+								else 
+									{
+										data.status 	= 	'error';
+										data.message	=	update_contact.text;
+										writeOutput(serializeJSON(data));
+										exit;
+									}
 						}
 						catch(Exception e) { 
 							data.status 	= 	'error';

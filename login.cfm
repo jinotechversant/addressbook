@@ -74,12 +74,14 @@
 				  		<div class="col-3">
 				  			<button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 				  		</div>
-				  		<div class="col-3">
+				  		<div class="col-6">
 				  			<a href="http://localhost:8500/addressbookapp/google.cfm" class="btn btn-primary">Signin With Google</a>
 				  		</div>
+				  		<!--
 				  		<div class="col-3">
 				  			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 				  		</div>
+				  		-->
 				  		<div class="col-3">
 				  			<div class="ms-3">
 					  			<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">

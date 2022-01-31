@@ -4,7 +4,7 @@ if(cgi.content_type EQ "application/json")
 	{
 		mydata 	= 	deserializeJSON(ToString(getHTTPRequestData().content));
 		data 	=	structNew();				
-
+		/*
 		if(mydata.form_action == 'google')
 			{
 				UserName			=	mydata.ID;
@@ -84,7 +84,8 @@ if(cgi.content_type EQ "application/json")
 						 
 					}
 			}
-
+		*/
+		
 		if(mydata.form_action == 'facebook')
 			{
 				UserName			=	mydata.ID;
