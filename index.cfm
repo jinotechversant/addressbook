@@ -6,7 +6,7 @@ if(StructKeyExists(Session, "user"))
 	}
 else
 	{
-		location("signup.cfm");
+		location("login.cfm");
 		exit;
 	}
 

@@ -8,4 +8,21 @@ component{
     this.ormSettings = { logsql : true, datasource = "addressbookdb"};
     this.invokeImplicitAccessor = true;
     this.mappings["/local"] = getDirectoryFromPath(getCurrentTemplatePath());
+
+	/*
+    function onRequestStart(requestname){ 
+
+    	if(StructKeyExists(Session, "user"))
+			{
+				location("dashboard.cfm");
+				exit;
+			}
+		else
+			{
+				location("signup.cfm");
+				exit;
+			}
+
+    }
+    */
 }

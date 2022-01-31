@@ -1,25 +1,39 @@
 component displayname="user"{
 
-	public function check(){
-		return 'hello';
-	}
-
 	public function checkUser(form)
 		{
-			data = structNew()
+			response = structNew()
 
 			try{
 				result = queryExecute("SELECT * FROM ab_users WHERE username = :usersname AND password =  :userpassword",{usersname: form.text_username, userpassword: form.text_password},  {});
-				data.status = 	"success";
-				data.text 	=	result;
+				response.status = 	"success";
+				response.text 	=	result;
 			}
 			catch (any e)
 			{
-				data.status = "error";
-				data.text 	= #e.message#;
+				response.status = "error";
+				response.text 	= #e.message#;
 			}
 
-			return data;
+			return response;
+		}
+
+	public function checkGoogle(data)
+		{
+			response = structNew()
+
+			try{
+				result = queryExecute("SELECT * FROM ab_users WHERE google_auth = :googleAuth",{googleAuth: data.googleAuth},  {});
+				response.status = 	"success";
+				response.text 	=	result;
+			}
+			catch (any e)
+			{
+				response.status = "error";
+				response.text 	= #e.message#;
+			}
+
+			return response;
 		}
 
 	public function insertUser(form){
@@ -37,6 +51,23 @@ component displayname="user"{
 			}
 
 		return data;	
+	}
+
+	public function insertGoogle(data){
+		response = structNew();
+		try
+			{
+				result = queryExecute("INSERT INTO ab_users (full_name, email, username, password, google_auth, login_type) VALUES ('#data.text_name#','#data.text_email#','#data.text_username#','#data.text_password#','#data.googleAuth#','#data.type#')",{}, { result="userset" });
+				response.status = 	"success";
+				response.text 	=	userset.generatedKey;
+			}
+		catch  (any e)
+			{
+				response.status = "error";
+				response.text 	= #e.message#;
+			}
+
+		return response;	
 	}
 
 }
