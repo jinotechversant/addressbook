@@ -9,20 +9,21 @@ component{
     this.invokeImplicitAccessor = true;
     this.mappings["/local"] = getDirectoryFromPath(getCurrentTemplatePath());
 
-	/*
     function onRequestStart(requestname){ 
-
-    	if(StructKeyExists(Session, "user"))
-			{
-				location("dashboard.cfm");
-				exit;
-			}
-		else
-			{
-				location("signup.cfm");
-				exit;
-			}
-
+        if(!structKeyExists(session, "user") or !structKeyExists(session.user, "loggedin") ){
+            if(!(find("login",requestname) > 0 or find("signup",requestname) > 0 or find("google",requestname) > 0)){
+               location("/addressbookapp/login.cfm",false);
+            }
+        }
     }
-    */
+
+    function onError(Exception,EventName){
+    	include "sorry.cfm";
+		writeOutput('<h2>An unexpected error occurred.</h2>
+		<p>Please provide the following information to technical support:</p>
+		<p>Error Event: #EventName#</p>
+		<p>Error details: #Exception.message#<br>');
+		exit;
+    }
+    
 }

@@ -20,7 +20,7 @@ if(StructKeyExists(form,"login-submit"))
 		                        Session.user["full_name"] 	= validate_user.text.full_name;
 		                        Session.user["user_email"] 	= validate_user.text.email;
 		                        Session.user["user_name"] 	= validate_user.text.username;
-		                        location("../index.cfm");
+		                        location("../dashboard.cfm");
 							}
 						else 
 							{

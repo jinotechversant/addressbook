@@ -29,11 +29,11 @@
 						{
 							Session.user 				= structNew();
 							Session.user["loggedin"] 	= "yes";
-	                        Session.user["userid"] 		= validate_user.text.id;
-	                        Session.user["full_name"] 	= validate_user.text.full_name;
-	                        Session.user["user_email"] 	= validate_user.text.email;
-	                        Session.user["user_name"] 	= validate_user.text.username;
-							location('http://localhost:8500/addressbookapp/');
+                     Session.user["userid"] 		= validate_user.text.id;
+                     Session.user["full_name"] 	= validate_user.text.full_name;
+                     Session.user["user_email"] 	= validate_user.text.email;
+	                  Session.user["user_name"] 	= validate_user.text.username;
+							location('http://localhost:8500/addressbookapp/dashboard.cfm');
 						}
 					else 
 						{
@@ -47,7 +47,7 @@
 					                        Session.user["full_name"] 	= data.text_name;
 					                        Session.user["user_email"] 	= data.text_email;
 					                        Session.user["user_name"] 	= data.text_username;
-											location('http://localhost:8500/addressbookapp/');
+											location('http://localhost:8500/addressbookapp/dashboard.cfm');
 										}
 									else 
 										{
