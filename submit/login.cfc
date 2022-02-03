@@ -1,6 +1,6 @@
 <cfscript>
 
-x = createObject("component", "local.components.user")
+userObj = createObject("component", "local.components.user")
 if(StructKeyExists(form,"login-submit"))
 	{
 		if(len(trim(form.text_username)) == 0 || len(trim(form.text_password)) == 0)
@@ -9,7 +9,7 @@ if(StructKeyExists(form,"login-submit"))
 		 	}
 		 else 
 			{
-				validate_user = x.checkUser(form);
+				validate_user = userObj.checkUser(form);
 				if(validate_user.status == 'success')
 					{
 						if(validate_user.text.RecordCount == 1)

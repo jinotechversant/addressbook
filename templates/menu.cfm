@@ -11,10 +11,10 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
      	<cfif StructKeyExists(Session,"user")>
      		<li class="nav-item">
-	          <a class="nav-link" aria-current="page" href="index.cfm">Home</a>
+	          <a class="nav-link" aria-current="page" href="dashboard.cfm">Home</a>
 	        </li>
 	        <li class="nav-item">
-	          <a class="nav-link" aria-current="page" href="logout.cfm">Logout</a>
+	          <a class="nav-link" aria-current="page" href="logout.cfc">Logout</a>
 	        </li>
 	    <cfelse>	    	
 	        <li class="nav-item">

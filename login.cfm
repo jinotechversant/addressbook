@@ -75,7 +75,7 @@
 				  			<button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 				  		</div>
 				  		<div class="col-6">
-				  			<a href="http://localhost:8500/addressbookapp/google.cfm" class="btn btn-primary">Signin With Google</a>
+				  			<a href="http://localhost:8500/addressbookapp/google.cfc" class="btn btn-primary">Signin With Google</a>
 				  		</div>
 				  		<!--
 				  		<div class="col-3">
@@ -116,7 +116,7 @@
 									'Email': profile.getEmail()
 							}
 
-				fetch('submit/social.cfm', {
+				fetch('submit/social.cfc', {
 	                method: 'POST',
 	                headers: {
 	                  'Content-Type': 'application/json',

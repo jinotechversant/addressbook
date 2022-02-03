@@ -59,13 +59,13 @@
 			<div class="col-12 mt-5 bg-gainsboro">
 				<ul class="nav justify-content-end p-1">
 				  <li class="nav-item">
-				    <a class="nav-link" target="_blank" href="pdf.cfm"><img src="icons/pdf.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="pdf.cfc"><img src="icons/pdf.png" width="30"></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" target="_blank" href="excel.cfm"><img src="icons/excel.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="excel.cfc"><img src="icons/excel.png" width="30"></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" target="_blank" href="print.cfm"><img src="icons/printer.png" width="30"></a>
+				    <a class="nav-link" target="_blank" href="print.cfc"><img src="icons/printer.png" width="30"></a>
 				  </li>
 				</ul>
 			</div>
@@ -295,10 +295,10 @@
 
     <script src="dist/js/bootstrap.bundle.min.js" ></script>
     <script>
-			var processModal = document.getElementById('contactModal')
-			processModal.addEventListener('show.bs.modal', function (event) {
-				var button = event.relatedTarget
-				var recipient = button.getAttribute('data-bs-value')				
+				var processModal = document.getElementById('contactModal')
+				processModal.addEventListener('show.bs.modal', function (event) {
+				var button     = event.relatedTarget
+				var recipient  = button.getAttribute('data-bs-value')				
 				var modalTitle = processModal.querySelector('.modal-title')
 				var actionText = document.getElementById("form_action")
 				
@@ -369,10 +369,11 @@
 
 						formData	=	{
 								'form_action' : 'view',
+								'method'			: 'contact', 
 								'contact_id'	:	contact_id
 						}
 
-						fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
+						fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
 			                method: 'POST',
 			                headers: {
 			                  'Content-Type': 'application/json',
@@ -435,10 +436,11 @@
 
 				    formData	=	{
 								'form_action' : 'view',
+								'method'			: 'viewContact',
 								'contact_id'	:	contact_id
 						}
 
-						fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
+						fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
 			                method: 'POST',
 			                headers: {
 			                  'Content-Type': 'application/json',
@@ -507,7 +509,8 @@
 					x.style.display = 'block';
 			    let formData = new FormData();           
 			    formData.append("file", upload_photo.files[0]);
-			    await fetch('http://localhost:8500/addressbookapp/submit/upload.cfm', {
+			    formData.append("method",'upload')
+			    await fetch('http://localhost:8500/addressbookapp/submit/upload.cfc', {
 			      method: "POST", 
 			      body: formData
 			    })

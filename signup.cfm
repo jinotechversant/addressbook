@@ -33,7 +33,7 @@
 			</div>
 			<div class="col-md-6 mx-auto" style="background: #faf9fa;">
 
-				<form class="mt-5 mb-5 w-75" name="signup-form" onsubmit="return formSubmit()" method="post" action="submit/signup.cfm">
+				<form class="mt-5 mb-5 w-75" name="signup-form" onsubmit="return formSubmit()" method="post" action="submit/signup.cfc">
 				  <div class="mb-3 error">
 				  	<div class="form-text text-success" id="sc-success"></div>
 				  	<div class="form-text text-danger" id="sc-error"></div>
@@ -84,7 +84,7 @@
 				  			<button type="submit" name="register-submit" class="btn btn-primary">Sign Up</button>
 				  		</div>
 				  		<div class="col-6">
-				  			<a href="http://localhost:8500/addressbookapp/google.cfm" class="btn btn-primary">Signup With Google</a>
+				  			<a href="http://localhost:8500/addressbookapp/google.cfc" class="btn btn-primary">Signup With Google</a>
 				  		</div>
 				  		<!--
 				  		<div class="col-3">
@@ -209,7 +209,7 @@
 								'Email': response.name
 						}
 
-				fetch('submit/social.cfm', {
+				fetch('submit/social.cfc', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
