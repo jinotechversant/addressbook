@@ -45,11 +45,11 @@ component displayname="contact"{
 		return data;	
 	}
 
-	public function deleteContact(contact_id){
+	public function deleteContact(contact_id, userid){
 		data = structNew();
 		try
 			{
-				result 		= queryExecute("DELETE FROM contacts WHERE  id = '#contact_id#'",{}, { result="userset" });
+				result 		= queryExecute("DELETE FROM contacts WHERE  id = '#contact_id#' AND userid = '#userid#'",{}, { result="userset" });
 				data.status = 	"success";
 				data.text 	=	contact_id;
 			}

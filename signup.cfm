@@ -202,19 +202,16 @@
         sc_success	=	document.getElementById('sc-success');
 				sc_error		=	document.getElementById('sc-error');	
 
-		  	formData	=	{
-								'form_action': 'facebook',
-								'ID':	response.id,
-								'Name': response.name,
-								'Email': response.name
-						}
+		  	let formData = new FormData();           
+		    formData.append("form_action",'facebook')
+		    formData.append("method",'facebookLogin')
+		    formData.append("ID",response.id)		
+		    formData.append("Name",response.name)		
+		    formData.append("Email",response.name)		
 
 				fetch('submit/social.cfc', {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formData,
               })
               .then(response => response.json())
               .then(data => {

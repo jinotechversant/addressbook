@@ -11,7 +11,7 @@ component{
 
     function onRequestStart(requestname){ 
         if(!structKeyExists(session, "user") or !structKeyExists(session.user, "loggedin") ){
-            if(!(find("login",requestname) > 0 or find("signup",requestname) > 0 or find("google",requestname) > 0)){
+            if(!(FindNoCase("login",requestname) > 0 or FindNoCase("signup",requestname) > 0 or FindNoCase("google",requestname) > 0)){
                location("/addressbookapp/login.cfm",false);
             }
         }

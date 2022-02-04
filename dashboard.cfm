@@ -367,18 +367,14 @@
 						
 						var contact_id = button.getAttribute('data-bs-id')
 
-						formData	=	{
-								'form_action' : 'view',
-								'method'			: 'contact', 
-								'contact_id'	:	contact_id
-						}
+						let formData = new FormData();           
+				    formData.append("form_action",'view')
+				    formData.append("method",'viewContact')
+				    formData.append("contact_id",contact_id)
 
 						fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
 			                method: 'POST',
-			                headers: {
-			                  'Content-Type': 'application/json',
-			                },
-			                body: JSON.stringify(formData),
+			                body: formData,
 			              })
 			              .then(response => response.json())
 			              .then(data => {
@@ -434,18 +430,14 @@
 
 				    var contact_id = button.getAttribute('data-bs-id');
 
-				    formData	=	{
-								'form_action' : 'view',
-								'method'			: 'viewContact',
-								'contact_id'	:	contact_id
-						}
+				    let formData = new FormData();           
+				    formData.append("form_action",'view')
+				    formData.append("method",'viewContact')
+				    formData.append("contact_id",contact_id)
 
 						fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
 			                method: 'POST',
-			                headers: {
-			                  'Content-Type': 'application/json',
-			                },
-			                body: JSON.stringify(formData),
+			                body: formData
 			              })
 			              .then(response => response.json())
 			              .then(data => {

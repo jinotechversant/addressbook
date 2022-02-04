@@ -266,32 +266,27 @@ function contactSubmit(event)
 
 	            let photo = document.getElementById("photo_name").value;
 
-	            console.log('PHOTOS', photo);
-							
-							formData 	=	{
-														'title':title,  
-												    'first_name':first_name,
-												    'last_name':last_name,
-												    'gender':gender,
-												    'dob':dob,
-												    'address':address,
-												    'pincode':pincode,
-												    'email':email,
-												    'phone':phone,
-												    'upload_photo':photo,
-												    'form_action':form_action,
-												    'contact_id':contact_id
-													}
-
 							var btnSubmit = document.getElementById('form_submit');
 							btnSubmit.disabled = true;	
 
-							fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
+							let formData = new FormData();  
+					    formData.append("method",'updateContact')
+					    formData.append("title",title)
+					    formData.append("first_name",first_name)
+					    formData.append("last_name",last_name)
+					    formData.append("gender",gender)
+					    formData.append("dob",dob)
+					    formData.append("address",address)
+					    formData.append("pincode",pincode)
+					    formData.append("email",email)
+					    formData.append("phone",phone)
+					    formData.append("upload_photo",photo)
+					    formData.append("form_action",form_action)
+					    formData.append("contact_id",contact_id)
+
+							fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
 			                method: 'POST',
-			                headers: {
-			                  'Content-Type': 'application/json',
-			                },
-			                body: JSON.stringify(formData),
+			                body: formData,
 			              })
 			              .then(response => response.json())
 			              .then(data => {
@@ -329,21 +324,16 @@ function contactSubmit(event)
 
 			let del_error			= document.getElementById('del_error');
     	let del_success		= document.getElementById('del_success');
-    	let contact_id		= document.forms['delete-form']['del_contact_id'].value
+    	let contact_id		= document.forms['delete-form']['del_contact_id'].value;
 
-			console.log(contact_id)
+			let formData 			= new FormData();  
+			formData.append("method",'deleteContact');
+			formData.append("form_action",'delete');
+			formData.append("contact_id",contact_id);
 
-			formData	=	{
-						'form_action' : 'delete',
-						'contact_id'	:	contact_id
-				}
-
-			fetch('http://localhost:8500/addressbookapp/submit/contact.cfm', {
+			fetch('http://localhost:8500/addressbookapp/submit/contact.cfc', {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formData,
               })
               .then(response => response.json())
               .then(data => {
