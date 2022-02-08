@@ -32,7 +32,7 @@
 				<img src="images/contacts.webp" style="width:320px;"/>
 			</div>
 			<div class="col-md-6 mx-auto" style="background: #faf9fa;">
-				<form class="mt-5 mb-5 w-75" name="login-form" onsubmit="return loginSubmit()" method="post" action="submit/login.cfm">					
+				<form class="mt-5 mb-5 w-75" name="login-form" onsubmit="return loginSubmit()" method="post" action="submit/login.cfc">					
 			  	<div class="form-text text-success" id="sc-success"></div>
 			  	<div class="form-text text-danger" id="sc-error"></div>
 					<cfoutput>

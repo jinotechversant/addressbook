@@ -3,7 +3,10 @@
 userObj = createObject("component", "local.components.user")
 if(StructKeyExists(form,"login-submit"))
 	{
-		if(len(trim(form.text_username)) == 0 || len(trim(form.text_password)) == 0)
+		username = form.text_username;
+		password = form.text_password;
+
+		if(len(trim(username)) == 0 || len(trim(password)) == 0)
 			{
 		 		location("../login.cfm?error=mandatory")
 		 	}

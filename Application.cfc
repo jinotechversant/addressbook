@@ -18,12 +18,11 @@ component{
     }
 
     function onError(Exception,EventName){
-    	include "sorry.cfm";
+    	//include "sorry.cfm";
 		writeOutput('<h2>An unexpected error occurred.</h2>
 		<p>Please provide the following information to technical support:</p>
 		<p>Error Event: #EventName#</p>
 		<p>Error details: #Exception.message#<br>');
-		exit;
     }
     
 }
